@@ -45,12 +45,12 @@ py xorencrypt.py -f <input_file> -o <output_file> -k <key> [--format raw|c|py]
 | `-h, --help`   | Show help message and exit                          |
 
 ## Examples
-### XOR‑encode a binary payload (raw output)
+### Generate a binary payload (raw output)
 ```
-py xorencrypt.py -f shell.bin -o shell_out.bin -k secret
+python xorencrypt.py -f shell.bin -o shell_out.bin -k secret
 
     ┌───────────────────────────────────────────────┐
-    │              XOR ENCODING TOOL                │
+    │              XOR ENCRYPTION TOOL              │
     │        Payload Obfuscation / Evasion          │
     ├───────────────────────────────────────────────┤
     │ Version : 9b153d7-dirty                       │
@@ -64,10 +64,10 @@ py xorencrypt.py -f shell.bin -o shell_out.bin -k secret
 ```
 ### Generate a C array payload
 ```
-py xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format c
+python xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format c
 
     ┌───────────────────────────────────────────────┐
-    │              XOR ENCODING TOOL                │
+    │              XOR ENCRYPTION TOOL              │
     │        Payload Obfuscation / Evasion          │
     ├───────────────────────────────────────────────┤
     │ Version : 9b153d7-dirty                       │
@@ -82,10 +82,10 @@ unsigned char buf[] = { 0x2f, 0x1d, 0x50, 0x43, 0x39, 0x0c, 0x10, 0x55, 0x3f, 0x
 ```
 ### Generate a Python byte array
 ```
-py xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format py
+python xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format py
 
     ┌───────────────────────────────────────────────┐
-    │              XOR ENCODING TOOL                │
+    │              XOR ENCRYPTION TOOL              │
     │        Payload Obfuscation / Evasion          │
     ├───────────────────────────────────────────────┤
     │ Version : 9b153d7-dirty                       │
@@ -113,16 +113,6 @@ Output files when using '--format c/py' will be automaticly written to .txt if o
 
 **arg:** *-o output_file.bin*  ->  **output:** *output_file.txt*
 
-## Example Output
-### Example C Array Output
-
-```c
-unsigned char payload[] = { 0x31, 0x9f, 0x42, 0xa1, 0x7d, 0x88 };
-```
-### Example Python Byte Array Output
-```py
-payload = b"\x31\x9f\x42\xa1\x7d\x88"
-```
 ## Notes
 
 XOR encryption is not **cryptographically secure** and is intended for obfuscation only.
