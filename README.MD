@@ -54,7 +54,7 @@ python xorencrypt.py -f shell.bin -o shell_out.bin -k secret
     │        Payload Obfuscation / Evasion          │
     ├───────────────────────────────────────────────┤
     │ Version : 9b153d7-dirty                       │
-    │ Author  : R-kallstro                          │
+    │ Author  : R-Kallstrom                         │
     │ Use     : Shellcode XOR Encoding              │
     └───────────────────────────────────────────────┘
 
