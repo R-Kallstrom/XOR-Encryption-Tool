@@ -54,7 +54,7 @@ py xorencrypt.py -f shell.bin -o shell_out.bin -k secret
     │        Payload Obfuscation / Evasion          │
     ├───────────────────────────────────────────────┤
     │ Version : 9b153d7-dirty                       │
-    │ Author  : ShellHound                          │
+    │ Author  : R-kallstro                          │
     │ Use     : Shellcode XOR Encoding              │
     └───────────────────────────────────────────────┘
 
@@ -71,7 +71,7 @@ py xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format c
     │        Payload Obfuscation / Evasion          │
     ├───────────────────────────────────────────────┤
     │ Version : 9b153d7-dirty                       │
-    │ Author  : ShellHound                          │
+    │ Author  : R-Kallstrom                         │
     │ Use     : Shellcode XOR Encoding              │
     └───────────────────────────────────────────────┘
 
@@ -89,7 +89,7 @@ py xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format py
     │        Payload Obfuscation / Evasion          │
     ├───────────────────────────────────────────────┤
     │ Version : 9b153d7-dirty                       │
-    │ Author  : ShellHound                          │
+    │ Author  : R-Kallstrom                         │
     │ Use     : Shellcode XOR Encoding              │
     └───────────────────────────────────────────────┘
 
