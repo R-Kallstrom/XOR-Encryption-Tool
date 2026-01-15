@@ -46,16 +46,70 @@ py xorencrypt.py -f <input_file> -o <output_file> -k <key> [--format raw|c|py]
 
 ## Examples
 ### XOR‑encode a binary payload (raw output)
-    python xor_tool.py -f shellcode.bin -o encrypted.bin -k secret
+```
+py xorencrypt.py -f shell.bin -o shell_out.bin -k secret
 
+    ┌───────────────────────────────────────────────┐
+    │              XOR ENCODING TOOL                │
+    │        Payload Obfuscation / Evasion          │
+    ├───────────────────────────────────────────────┤
+    │ Version : 9b153d7-dirty                       │
+    │ Author  : ShellHound                          │
+    │ Use     : Shellcode XOR Encoding              │
+    └───────────────────────────────────────────────┘
+
+[+] File loaded
+[+] XOR encoding complete
+[+] Written to output file: shell_out.bin
+```
 ### Generate a C array payload
-    python xor_tool.py -f shellcode.bin -o payload.txt -k secret --format c
+```
+py xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format c
 
+    ┌───────────────────────────────────────────────┐
+    │              XOR ENCODING TOOL                │
+    │        Payload Obfuscation / Evasion          │
+    ├───────────────────────────────────────────────┤
+    │ Version : 9b153d7-dirty                       │
+    │ Author  : ShellHound                          │
+    │ Use     : Shellcode XOR Encoding              │
+    └───────────────────────────────────────────────┘
+
+[+] File loaded
+[+] XOR encoding complete
+[+] Shellcode:
+unsigned char buf[] = { 0x2f, 0x1d, 0x50, 0x43, 0x39, 0x0c, 0x10, 0x55, 0x3f, 0x0a, 0x50, 0x44 };
+```
 ### Generate a Python byte array
-    python xor_tool.py -f shellcode.bin -o payload.txt -k secret --format py
+```
+py xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format py
+
+    ┌───────────────────────────────────────────────┐
+    │              XOR ENCODING TOOL                │
+    │        Payload Obfuscation / Evasion          │
+    ├───────────────────────────────────────────────┤
+    │ Version : 9b153d7-dirty                       │
+    │ Author  : ShellHound                          │
+    │ Use     : Shellcode XOR Encoding              │
+    └───────────────────────────────────────────────┘
+
+[+] File loaded
+[+] XOR encoding complete
+[+] Shellcode:
+payload = b"\x2f\x1d\x50\x43\x39\x0c\x10\x55\x3f\x0a\x50\x44"
+```
     
 #### Note
+
+Output files when using '--format raw' (default) will be automaticly written to .bin if other filetype is used in argument.
+
 Output files when using '--format c/py' will be automaticly written to .txt if other filetype is used in argument.
+
+#### raw
+
+**arg:** *-o output_file.txt*  ->  **output:** *output_file.bin*
+
+#### c/py
 
 **arg:** *-o output_file.bin*  ->  **output:** *output_file.txt*
 
