@@ -1,4 +1,5 @@
 import argparse, re, sys, subprocess
+from pathlib import Path
 
 def main():
     """
@@ -45,8 +46,15 @@ def main():
 
 #   ====== RUN ====== 
     print_banner(version)
-    input_file = load_file(args.file)
-    shell_encoded = xor_encrypt(input_file, args.key)
+
+    ## check if input is .bin or .txt file ##
+    if ".bin" in args.file:
+        input_file = load_file(args.file)
+    else:
+        input_file = parse_shellcode_txt(args.file)
+
+    key = args.key.encode()
+    shell_encoded = xor_encrypt(input_file, key)
     write_file(args.output, shell_encoded, args.format)
 # Main end()
 
@@ -54,30 +62,57 @@ def main():
 #   ====== FUNCTIONS ======
 
     # XOR encryption #
-def xor_encrypt(data, inKey):
+def xor_encrypt(data: bytes, key: bytes) -> bytes:
     """
     XOR-encrypts binary data using a repeating key.
 
     Args:
         data (bytes | bytearray): Binary data to encrypt.
-        inKey (str): Encryption key (UTF-8 encoded).
+        key (bytes): XOR key repeatingly used.
 
     Returns:
         bytes: XOR-encrypted output.
     """
-    key = inKey.encode()
-    out = bytearray()
-
-    for i, byte in enumerate(data):
-        out.append(byte ^ key[i % len(key)])
-
+    encrypted_shellcode = bytes(b ^ key[i % len(key)] for i, b in enumerate(data))
     print("[+] XOR encoding complete")
-    return bytes(out)
+    return encrypted_shellcode
 
 
 #   ====== FILE HANDLING ======
 
-    ## Input ##
+    ## File reader for .txt file ##
+def parse_shellcode_txt(path: str) -> bytes:
+    """Parses hex-encoded shellcode from a text file.
+
+    Supports escaped hex (e.g. "\\x90\\x90"), space-separated bytes,
+    and ignores commas and newlines.
+
+    Args:
+        path (str): Path to the shellcode text file.
+
+    Returns:
+        bytes: Parsed shellcode bytes.
+
+    Exits:
+        Terminates the program if the file is empty, missing, or unreadable.
+    """
+    try:
+        text = Path(path).read_text().strip()
+        text = text.replace("\\x", "").replace(",", "").replace("\n", " ")
+    
+    except FileNotFoundError:
+        print(f"[-] File not found: {path}")
+        sys.exit(1)
+
+    except Exception as e:
+        print(f"[-] {e}")
+        sys.exit(1)
+    
+    else:
+        print("[+] File loaded")    
+    return bytes.fromhex(text)
+
+    ## File reader for .bin file ##
 def load_file(path):
     """
     Loads binary data from a file.
