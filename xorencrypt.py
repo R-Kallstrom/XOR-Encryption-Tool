@@ -136,7 +136,9 @@ def write_file(path, shell_encrypted, format):
         path = re.sub("[.].+", ".txt", path)
         with open(path, "w") as file:
             encrypted_c = shell_encrypted.hex()
-            encrypted_c = "unsigned char buf[] = { 0x" + ", 0x".join(encrypted_c[i:i + 2] for i in range(0, len(encrypted_c), 2)) + " };"
+            hex_bytes = [encrypted_c[i:i + 2] for i in range(0, len(encrypted_c), 2)]
+            lines = [", 0x".join(hex_bytes[i:i + 16]) for i in range(0, len(hex_bytes), 16)]
+            encrypted_c = ("unsigned char buf[] = {\n  0x" + ",\n  0x".join(lines) + "\n};")
             file.write(encrypted_c)
         print("[+] Shellcode:\n", encrypted_c)
 
@@ -145,7 +147,9 @@ def write_file(path, shell_encrypted, format):
         path = re.sub("[.].+", ".txt", path)
         with open(path, "w") as file:
             encrypted_py = shell_encrypted.hex()
-            encrypted_py = "payload = b\"" + "\\x" + "\\x".join(encrypted_py[i:i + 2] for i in range(0, len(encrypted_py), 2)) + "\""
+            hex_bytes = [encrypted_py[i:i + 2] for i in range(0, len(encrypted_py), 2)]
+            lines = ["\\x".join(hex_bytes[i:i + 16]) for i in range(0, len(hex_bytes), 16)]
+            encrypted_py = ("payload = \n  \\x" + "\n  \\x".join(lines) + "\n")
             file.write(encrypted_py)
         print("[+] Shellcode:\n", encrypted_py)
 
