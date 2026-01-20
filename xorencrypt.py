@@ -53,7 +53,7 @@ def main():
     else:
         input_file = parse_shellcode_txt(args.file)
 
-    key = args.key.encode()
+    key = parse_key(args.key)
     shell_encoded = xor_encrypt(input_file, key)
     write_file(args.output, shell_encoded, args.format)
 # Main end()
@@ -61,7 +61,7 @@ def main():
 
 #   ====== FUNCTIONS ======
 
-    # XOR encryption #
+    ## XOR encryption ##
 def xor_encrypt(data: bytes, key: bytes) -> bytes:
     """
     XOR-encrypts binary data using a repeating key.
@@ -76,6 +76,21 @@ def xor_encrypt(data: bytes, key: bytes) -> bytes:
     encrypted_shellcode = bytes(b ^ key[i % len(key)] for i, b in enumerate(data))
     print("[+] XOR encoding complete")
     return encrypted_shellcode
+
+    ## Key Converter ##
+def parse_key(key : str) -> bytes:
+    """
+    Convert a key string to bytes.
+
+    Args:
+        key (str): A hex string prefixed with "0x" or a plain text string.
+
+    Returns:
+        bytes: The parsed key as bytes.
+    """
+    if key.startswith("0x"):
+        return bytes([int((key), 16)])
+    return key.encode()
 
 
 #   ====== FILE HANDLING ======
@@ -98,7 +113,7 @@ def parse_shellcode_txt(path: str) -> bytes:
     """
     try:
         text = Path(path).read_text().strip()
-        text = text.replace("\\x", "").replace(",", "").replace("\n", " ")
+        text = text.replace("\\x", "").replace(",", "").replace("\n", "").replace("\"","")
     
     except FileNotFoundError:
         print(f"[-] File not found: {path}")
@@ -110,7 +125,7 @@ def parse_shellcode_txt(path: str) -> bytes:
     
     else:
         print("[+] File loaded")    
-    return bytes.fromhex(text)
+        return bytes.fromhex(text)
 
     ## File reader for .bin file ##
 def load_file(path):
@@ -159,14 +174,14 @@ def write_file(path, shell_encrypted, format):
     Output:
         Write to .bin or .txt depending on format. Will print output to terminal if format is "c" or "py".
     """
-    # Output in raw bytes
+    # Output in raw bytes #
     if format == "raw":
         path = re.sub("[.].+", ".bin", path)
         with open(path, "wb") as file:
             file.write(shell_encrypted)
         print(f"[+] Written to output file: {path}")
 
-    # Output as C-array
+    # Output as C-array #
     if format == "c":
         path = re.sub("[.].+", ".txt", path)
         with open(path, "w") as file:
@@ -177,7 +192,7 @@ def write_file(path, shell_encrypted, format):
             file.write(encrypted_c)
         print("[+] Shellcode:\n", encrypted_c)
 
-    # Output as Python-array
+    # Output as Python-array #
     if format == "py":
         path = re.sub("[.].+", ".txt", path)
         with open(path, "w") as file:
@@ -190,6 +205,8 @@ def write_file(path, shell_encrypted, format):
 
 
 # ====== STYLING ======
+
+    ## Version handler ##
 def get_git_version():
     try:
         return subprocess.check_output(
@@ -200,7 +217,7 @@ def get_git_version():
     except Exception:
         return "unknown"
     
-    # Banner #
+    ## Banner ##
 def print_banner(version):
     banner = rf"""
     ┌───────────────────────────────────────────────┐
