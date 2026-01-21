@@ -81,6 +81,7 @@ def xor_encrypt_bin(data, key_bytes):
 
     for i, b in enumerate(data):
         encrypted_shellcode.append(b ^ key_bytes[i % key_len])
+    print("[+] XOR encoding complete")
     return encrypted_shellcode
 
     ## XOR encryption for .txt shellcode##
@@ -205,8 +206,7 @@ def write_file(path, shell_encrypted, format, f_type):
         if format == "c":
             print_to_terminal(shell_encrypted, "c")
         elif format == "py":
-            print_to_terminal(encrypted_py, "py")
-
+            print_to_terminal(shell_encrypted, "py")
 
     # # Output as C-array #
     elif f_type == ".txt" and format == "c":
@@ -241,6 +241,7 @@ def print_to_terminal(shell_encrypted, format):
         hex_bytes = [encrypted_c[i:i + 2] for i in range(0, len(encrypted_c), 2)]
         lines = [", 0x".join(hex_bytes[i:i + 16]) for i in range(0, len(hex_bytes), 16)]
         encrypted_c = ("unsigned char buf[] = {\n  0x" + ",\n  0x".join(lines) + "\n};")
+        print("[+] Shellcode:")
         print(encrypted_c)
     
     elif format == "py":
@@ -248,6 +249,7 @@ def print_to_terminal(shell_encrypted, format):
         hex_bytes = [encrypted_py[i:i + 2] for i in range(0, len(encrypted_py), 2)]
         lines = ["\\x".join(hex_bytes[i:i + 16]) for i in range(0, len(hex_bytes), 16)]
         encrypted_py = ("payload = \n  \\x" + "\n  \\x".join(lines) + "\n")
+        print("[+] Shellcode:")
         print (encrypted_py)
 
 # ====== STYLING ======
