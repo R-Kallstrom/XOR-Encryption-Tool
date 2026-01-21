@@ -47,7 +47,7 @@ py xorencrypt.py -f <input_file> -o <output_file> -k <key> [--format raw|c|py]
 ## Examples
 ### Generate a binary payload (raw output)
 ```
-python xorencrypt.py -f shell.bin -o shell_out.bin -k secret
+python xorencrypt.py -f shell.bin -o shell_out.bin -k 0x41
 
     ┌───────────────────────────────────────────────┐
     │              XOR ENCRYPTION TOOL              │
@@ -64,7 +64,7 @@ python xorencrypt.py -f shell.bin -o shell_out.bin -k secret
 ```
 ### Generate a C array payload
 ```
-python xorencrypt.py -f shell.txt -o shell_out.txt -k 0x4142de --format c
+python xorencrypt.py -f shell.bin -o shell_out.bin -k 0x4142de --format c
 
     ┌───────────────────────────────────────────────┐
     │              XOR ENCRYPTION TOOL              │
@@ -77,10 +77,13 @@ python xorencrypt.py -f shell.txt -o shell_out.txt -k 0x4142de --format c
 
 [+] File loaded
 [+] XOR encoding complete
+[+] Written to output file: shell_out.bin
+[+] Byte Size: 317
 [+] Shellcode:
-unsigned char buf[] = {  
-  0xbd, 0x0a, 0x5f, 0xa5, 0xb2, 0x21, 0xbe, 0xbd, 0x36, 0x8d, 0x42, 0xde, 0x41, 0x03, 0x8f, 0x00,
-  0x12, 0x8c, 0x10, 0x0a, 0xef, 0x93, 0x27, 0x96, 0xca, 0x10, 0xbe, 0x17, 0x0a, 0x55, 0x13, 0x5a,
+unsigned char buf[] = {
+  0xbd, 0x09, 0xc0, 0xa5, 0xb1, 0xbe, 0xbe, 0xbe, 0xa9, 0x8d, 0x41, 0x41, 0x41, 0x00, 0x10, 0x00,
+  0x11, 0x13, 0x09, 0x70, 0x93, 0x10, 0x17, 0x24, 0x09, 0xca, 0x13, 0x21, 0x09, 0xca, 0x13, 0x59,
+  ...
 };
 ```
 ### Generate a Python byte array
@@ -98,25 +101,14 @@ python xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format py
 
 [+] File loaded
 [+] XOR encoding complete
+[+] Written to output file: shell_out.txt
+[+] Byte Size: 317
 [+] Shellcode:
- payload =
-  \x8f\x2d\xe2\x96\x95\x8b\x8c\x9a\x8b\xbe\x65\x74\x73\x24\x32\x33
-  \x35\x26\x22\x2d\x52\xa0\x00\x3c\xf8\x37\x03\x24\x2d\xff\x21\x7d
+payload =
+  \xbd\x09\xc0\xa5\xb1\xbe\xbe\xbe\xa9\x8d\x41\x41\x41\x00\x10\x00
+  \x11\x13\x09\x70\x93\x10\x17\x24\x09\xca\x13\x21\x09\xca\x13\x59
+  ...
 ```
-    
-#### Note
-
-Output files when using '--format raw' (default) will be automaticly written to .bin if other filetype is used in argument.
-
-Output files when using '--format c/py' will be automaticly written to .txt if other filetype is used in argument.
-
-#### raw
-
-**arg:** *-o output_file.txt*  ->  **output:** *output_file.bin*
-
-#### c/py
-
-**arg:** *-o output_file.bin*  ->  **output:** *output_file.txt*
 
 ## Notes
 
