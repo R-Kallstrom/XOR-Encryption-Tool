@@ -89,7 +89,7 @@ def parse_key(key : str) -> bytes:
         bytes: The parsed key as bytes.
     """
     if key.startswith("0x"):
-        return bytes([int((key), 16)])
+        return bytes.fromhex(key[2:])
     return key.encode()
 
 
@@ -233,3 +233,4 @@ def print_banner(version):
 
 if __name__ == "__main__":
     main()
+
