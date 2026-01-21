@@ -64,7 +64,7 @@ python xorencrypt.py -f shell.bin -o shell_out.bin -k secret
 ```
 ### Generate a C array payload
 ```
-python xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format c
+python xorencrypt.py -f shell.txt -o shell_out.txt -k 0x4142de --format c
 
     ┌───────────────────────────────────────────────┐
     │              XOR ENCRYPTION TOOL              │
@@ -78,7 +78,10 @@ python xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format c
 [+] File loaded
 [+] XOR encoding complete
 [+] Shellcode:
-unsigned char buf[] = { 0x2f, 0x1d, 0x50, 0x43, 0x39, 0x0c, 0x10, 0x55, 0x3f, 0x0a, 0x50, 0x44 };
+unsigned char buf[] = {  
+  0xbd, 0x0a, 0x5f, 0xa5, 0xb2, 0x21, 0xbe, 0xbd, 0x36, 0x8d, 0x42, 0xde, 0x41, 0x03, 0x8f, 0x00,
+  0x12, 0x8c, 0x10, 0x0a, 0xef, 0x93, 0x27, 0x96, 0xca, 0x10, 0xbe, 0x17, 0x0a, 0x55, 0x13, 0x5a,
+};
 ```
 ### Generate a Python byte array
 ```
@@ -96,7 +99,9 @@ python xorencrypt.py -f shell.txt -o shell_out.txt -k secret --format py
 [+] File loaded
 [+] XOR encoding complete
 [+] Shellcode:
-payload = b"\x2f\x1d\x50\x43\x39\x0c\x10\x55\x3f\x0a\x50\x44"
+ payload =
+  \x8f\x2d\xe2\x96\x95\x8b\x8c\x9a\x8b\xbe\x65\x74\x73\x24\x32\x33
+  \x35\x26\x22\x2d\x52\xa0\x00\x3c\xf8\x37\x03\x24\x2d\xff\x21\x7d
 ```
     
 #### Note
